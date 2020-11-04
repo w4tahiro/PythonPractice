@@ -11,8 +11,83 @@ def show_board():
                 print("*",end=" ")
         print("\n",end="")
 
-def check_able(a,b):
-    print("yeah")
+def turn_over2(x,y,zx,zy,turn):
+    if turn == 0:
+        cnt = 0
+        wx = x
+        wy = y
+        while wx + zx >= 0 and wx + zx <= 7 and wy + zy >= 0 and wy + zy <= 7:
+            wx = wx + zx
+            wy = wy + zy
+            if cell[wx][wy] == 1:
+               cnt = cnt + 1
+            elif cnt >= 1 and cell[wx][wy] == 0:
+                break
+            else:
+                break
+        if cnt == 0:
+            return 0
+        else:
+            cell[x][y] = 0
+            while cnt >= 1:
+                x = x + zx
+                y = y + zy
+                cell[x][y] = 0
+                cnt = cnt - 1
+            return 1
+
+    elif turn == 1:
+        cnt = 0
+        wx = x
+        wy = y
+        while wx + zx >= 0 and wx + zx <= 7 and wy + zy >= 0 and wy + zy <= 7:
+            wx = wx + zx
+            wy = wy + zy
+            if cell[wx][wy] == 1:
+               cnt = cnt + 1
+            elif cnt >= 1 and cell[wx][wy] == 0:
+                break
+            else:
+                break
+        if cnt == 0:
+            return 0
+        else:
+            cell[x][y] = 1
+            while cnt >= 1:
+                x = x + zx
+                y = y + zy
+                cell[x][y] = 1
+                cnt = cnt - 1
+            return 1
+
+def turn_over(x,y,turn):
+    tf = 0
+    if cell[x][y] == None:
+        if turn == 0:
+            tf = tf + turn_over2(x,y,-1,0,turn)
+            tf = tf + turn_over2(x,y,-1,-1,turn)
+            tf = tf + turn_over2(x,y,-1,1,turn)
+            tf = tf + turn_over2(x,y,0,1,turn)
+            tf = tf + turn_over2(x,y,0,-1,turn)
+            tf = tf + turn_over2(x,y,1,0,turn)
+            tf = tf + turn_over2(x,y,1,1,turn)
+            tf = tf + turn_over2(x,y,1,-1,turn)
+        elif turn == 1:
+            tf = tf + turn_over2(x,y,-1,0,turn)
+            tf = tf + turn_over2(x,y,-1,-1,turn)
+            tf = tf + turn_over2(x,y,-1,1,turn)
+            tf = tf + turn_over2(x,y,0,1,turn)
+            tf = tf + turn_over2(x,y,0,-1,turn)
+            tf = tf + turn_over2(x,y,1,0,turn)
+            tf = tf + turn_over2(x,y,1,1,turn)
+            tf = tf + turn_over2(x,y,1,-1,turn)
+        if tf == 0:
+            return 0
+        else:
+            return 1
+    else:
+        print("おけない！")
+        return 0
 
 def turn_change(a):
     if a == 0:
@@ -31,23 +106,22 @@ a = 0
 
 #本体
 while flag == 1:
+    print("--"*10)
     show_board()
-    check = check_able()
-    #まずおける場所があるかチェック
-    if check == 1:
-        #1人目おけないからターン変更
-        turn = turn_change(turn)
-    elif check == 2:
-        #2人ともおけないからゲーム終了
-        flag = 0
-        break
+
     #ひっくり返す処理
     while a == 0:
-        tmp = int(input("縦"))
-        tmp2 = int(input("横"))
+        if turn == 1:
+            print("black")
+        else:
+            print("white")
+
+        tmp = int(input("tate(0～7)"))
+        tmp2 = int(input("yoko(0～7"))
         #ひっくり返せたらブレイク
-        if turn_over(tmp,tmp2) == 1:
+        if turn_over(tmp,tmp2,turn) >= 1:
             break
+        print("おけない")
     #ターン変更
     turn = turn_change(turn)
 
