@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 from matplotlib import animation
 from IPython.display import HTML
 
+print('hello')
+
 fig = plt.figure(figsize=(3,3))
 
 plt.plot([0,3],[3,3],color='k')
@@ -122,6 +124,5 @@ for episode in range(10000):
     print('ep:{},step:{},henka:{:.4f},'.format(episode,len(s_a_history)-1,pi_delta))
     if pi_delta < stop_epsilon:
         print(pi_new)
+        plt.show()
         break
-
-
