@@ -95,5 +95,4 @@ for episode in range(10):
     [s_a_history,Q] = play(Q,epsilon,pi_0)
     print('episode:{},step:{},epsilon:{}'.format(episode,len(s_a_history)-1,epsilon))
     print(Q,'\n')
-
-print('hello')
+    print('Hello')
